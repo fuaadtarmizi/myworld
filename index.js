@@ -10,13 +10,13 @@ const server = http.createServer(app)
 const io = new Server(server, {
   cors: {
     origin: '*', // allow frontend to connect
-    methods: ['GET', 'POST'],
+    // methods: ['GET', 'POST'],
   }
 })
 
 // When a user connects
 io.on('connection', (socket) => {
-  console.log('🟢 New user connected:', socket.id)
+  console.log('🟢 user connected:', socket.id)
 
   // When a chat message is received
   socket.on('chat-message', (msg) => {
@@ -30,8 +30,8 @@ io.on('connection', (socket) => {
   })
 })
 
-const PORT = 8843
-server.listen(8843, () => {
-  console.log(`🚀 Server is running at http://localhost:8843`)
+const PORT = process.env.PORT || 3000
+server.listen(PORT, () => {
+  console.log(`🚀 Server is running at on port ${PORT}`)
   
 })
