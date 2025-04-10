@@ -4,13 +4,18 @@ const { Server } = require('socket.io')
 const cors = require('cors')
 
 const app = express()
-app.use(cors())
+app.use(cors({
+  origin: ['https://myworld-1c5cc.web.app'], // ✅ allow your Firebase frontend
+  methods: ['GET', 'POST'],
+  credentials: true
+}))
 
 const server = http.createServer(app)
 const io = new Server(server, {
   cors: {
-    origin: '*', // allow frontend to connect
-    // methods: ['GET', 'POST'],
+    origin: 'https://myworld-1c5cc.web.app',
+    methods: ['GET', 'POST'],
+    credentials: true
   }
 })
 
@@ -34,4 +39,8 @@ const PORT = process.env.PORT || 3000
 server.listen(PORT, () => {
   console.log(`🚀 Server is running at on port ${PORT}`)
   
+})
+
+app.get('/', (req, res) => {
+  res.send('🟢 Socket.io backend is running.')
 })
